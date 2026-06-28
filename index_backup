@@ -49,8 +49,8 @@
     }
     .divider { width:70px; height:3px; background:linear-gradient(90deg,#c8a415,#f0c93a,#c8a415); border-radius:2px; }
     .slide h2 { font-size:1.9rem; font-weight:800; color:#1a1a1a; line-height:1.2; }
-    .slide p { font-size:1.35rem; line-height:1.6; color:#333; max-width:400px; }
-    .warn { font-size:1.25rem; color:#b91c1c; font-weight:800; background:#fff1f1; border:2px solid #f5c6c6; padding:0.65rem 1.2rem; border-radius:10px; display:inline-block; }
+    .slide p { font-size:1.25rem; line-height:1.5; color:#333; max-width:420px; }
+    .warn { font-size:1.15rem; color:#b91c1c; font-weight:800; background:#fff1f1; border:2px solid #f5c6c6; padding:0.65rem 1.2rem; border-radius:10px; display:inline-block; }
 
     .logo-small { position:absolute; top:10px; right:14px; width:56px; height:56px; object-fit:contain; opacity:0.75; z-index:5; pointer-events:none; }
 
@@ -82,11 +82,8 @@
   </div>
 
   <div class="car-screen" id="carScreen">
-    <div class="prog-bar">
-      <div class="seg current" id="s0"></div>
-      <div class="seg" id="s1"></div>
-      <div class="seg" id="s2"></div>
-      <div class="seg" id="s3"></div>
+    <div class="prog-bar" id="progBar">
+      <!-- Generado dinámicamente por JS -->
     </div>
     <div class="car-content">
       <div class="tap-l" onclick="prev()"></div>
@@ -100,34 +97,39 @@
 <script>
 const C={
   de:[
-    {n:'1',t:'HAUBE REINIGEN 🧼',b:'Fläche staub- und fettfrei machen.',w:'❗ KEIN WACHS! KEINE POLITUR!'},
-    {n:'2',t:'VAKUUM DRÜCKEN ✋',b:'Saugnäpfe leicht anfeuchten. Direkt auf den Saugnapf drücken – NIEMALS auf die Blüte!',w:''},
-    {n:'3',t:'SICHER ENTFERNEN 🔓',b:'Zum Abnehmen NUR an der kleinen Lasche ziehen.',w:'❗ NIEMALS an der Blume reißen!'},
-    {n:'4',t:'GUTE FAHRT! 🚗💨',b:'',w:'❗ MAX. 80 KM/H',f:1}
+    {n:'1',t:'HAUBE REINIGEN 🧼',b:'Reinige und trockne den Bereich der Motorhaube gründlich. Die Fläche muss absolut staub-, schmutz- und fettfrei sein, damit die Saugnäpfe mit maximaler Kraft haften.',w:'❗ KEIN WACHS! KEINE POLITUR!'},
+    {n:'2',t:'POSITIONIEREN 🎀',b:'Lege die Girlande vor dem Fixieren auf das Auto. Probiere verschiedene Formen aus (V-Form, asymmetrisch oder geschwungen) und finde die ideale Position, damit sie am Hochzeitsauto perfekt zur Geltung kommt.',w:''},
+    {n:'3',t:'VAKUUM DRÜCKEN ✋',b:'Feuchte die Innenseite jedes Saugnapfes ganz leicht an, um ein stärkeres Vakuum zu erzeugen. Drücke dann die Mitte des Saugnapfes fest gegen das Blech. Drücke NUR auf den Saugnapf und NIEMALS auf die Blumen!',w:''},
+    {n:'4',t:'SICHER ENTFERNEN 🔓',b:'Hebe nach der Feier vorsichtig die kleine transparente Lasche jedes Saugnapfes an, um das Vakuum zu lösen. Er löst sich sofort und ohne Spuren zu hinterlassen.',w:'❗ NIEMALS an der Blume oder am Stiel ziehen!'},
+    {n:'5',t:'GUTE FAHRT! 🚗💨',b:'Alles ist bereit für diesen besonderen Moment. Fahrt vorsichtig und genießt jeden Augenblick. Nueva Vida wünscht euch eine unvergessliche Feier!',w:'❗ MAX. 80 KM/H',f:1}
   ],
   en:[
-    {n:'1',t:'CLEAN THE HOOD 🧼',b:'Surface must be completely dust and grease-free.',w:'❗ NO WAX! NO POLISH!'},
-    {n:'2',t:'PRESS & SECURE ✋',b:'Moisten suction cups slightly. Press the suction cup directly – NEVER press the flower!',w:''},
-    {n:'3',t:'SAFE REMOVAL 🔓',b:'To remove, pull ONLY the small tab on the suction cup.',w:'❗ NEVER rip the flower off!'},
-    {n:'4',t:'HAVE A GREAT DRIVE! 🚗💨',b:'',w:'❗ MAX. 80 KM/H',f:1}
+    {n:'1',t:'CLEAN THE HOOD 🧼',b:'Thoroughly clean and dry the area on the hood. The surface must be completely free of dust, dirt, or grease to ensure the suction cups adhere with maximum strength.',w:'❗ NO WAX! NO POLISH!'},
+    {n:'2',t:'DESIGN THE POSITION 🎀',b:'Before securing it, lay the garland on the car. Play with the shape and find the ideal position (V-shape, asymmetrical, or curved) so it looks perfect on the wedding or guest car.',w:''},
+    {n:'3',t:'FIX FIRMLY ✋',b:'Very slightly moisten the inside of each suction cup to create a stronger vacuum. Then, press the center of the suction cup firmly against the car body. Make sure to press ONLY the suction cup and NEVER the flowers!',w:''},
+    {n:'4',t:'SAFE REMOVAL 🔓',b:'After the celebration, gently lift the small transparent tab on each suction cup to break the vacuum. It will release instantly without leaving any marks.',w:'❗ NEVER pull on the flower or stem!'},
+    {n:'5',t:'ENJOY THE DAY! 🚗💨',b:'Everything is ready for this special moment. Drive safely and enjoy every second. From Nueva Vida, we wish you an unforgettable celebration!',w:'❗ MAX. 80 KM/H',f:1}
   ],
   fr:[
-    {n:'1',t:'NETTOYER LE CAPOT 🧼',b:'La surface doit être sans poussière ni graisse.',w:'❗ PAS DE CIRE ! PAS DE POLISH !'},
-    {n:'2',t:'PRESSER LA VENTOUSE ✋',b:'Humidifiez légèrement les ventouses. Appuyez directement sur la ventouse, JAMAIS sur la fleur !',w:''},
-    {n:'3',t:'RETRAIT SÉCURISÉ 🔓',b:'Pour retirer, tirez UNIQUEMENT sur la petite languette.',w:'❗ NE JAMAIS arracher la fleur !'},
-    {n:'4',t:'BONNE ROUTE ! 🚗💨',b:'',w:'❗ MAX. 80 KM/H',f:1}
+    {n:'1',t:'NETTOYER LE CAPOT 🧼',b:'Nettoyez et séchez bien la zone du capot. La surface doit être totalement exempte de poussière, de saleté ou de graisse pour garantir une adhérence maximale des ventouses.',w:'❗ PAS DE CIRE ! PAS DE POLISH !'},
+    {n:'2',t:'POSITIONNER 🎀',b:'Avant de la fixer, présentez la guirlande sur la voiture. Jouez avec la forme et trouvez la position idéale (en "V", asymétrique ou courbée) pour qu\'elle soit parfaite sur le véhicule des mariés ou des invités.',w:''},
+    {n:'3',t:'FIXER FERMEMENT ✋',b:'Humidifiez très légèrement l\'intérieur de chaque ventouse pour créer un vide plus fort. Ensuite, pressez fermement le centre de la ventouse contre la carrosserie. Assurez-vous de ne presser QUE la ventouse et JAMAIS les fleurs !',w:''},
+    {n:'4',t:'RETRAIT SÉCURISÉ 🔓',b:'Après la célébration, soulevez doucement la petite languette transparente de chaque ventouse pour rompre le vide. Elle se détachera instantanément sans laisser de traces.',w:'❗ NE JAMAIS tirer sur la fleur ou la tige !'},
+    {n:'5',t:'BONNE ROUTE ! 🚗💨',b:'Tout est prêt pour ce moment si spécial. Conduisez prudemment et profitez de chaque instant. De la part de Nueva Vida, nous vous souhaitons une célébration inoubliable !',w:'❗ MAX. 80 KM/H',f:1}
   ],
   es:[
-    {n:'1',t:'LIMPIAR EL CAPÓ 🧼',b:'La superficie debe estar sin polvo ni grasa.',w:'❗ ¡CERO CERA! ¡CERO PULIMIENTO!'},
-    {n:'2',t:'PRESIONAR LA VENTOSA ✋',b:'Humedezca ligeramente las ventosas. Presione directamente la ventosa, ¡NUNCA la flor!',w:''},
-    {n:'3',t:'RETIRADA SEGURA 🔓',b:'Para quitar, tire SOLO de la pequeña lengüeta.',w:'❗ ¡NUNCA arranque la flor!'},
-    {n:'4',t:'¡BUEN VIAJE! 🚗💨',b:'',w:'❗ MÁX. 80 KM/H',f:1}
+    {n:'1',t:'LIMPIAR EL CAPÓ 🧼',b:'Limpia y seca bien la zona del capó donde irá la guirnalda. La superficie debe estar totalmente libre de polvo, suciedad o grasa para garantizar que las ventosas se adhieran con la máxima fuerza.',w:'❗ ¡CERO CERA! ¡CERO PULIMIENTO!'},
+    {n:'2',t:'DISEÑAR LA POSICIÓN 🎀',b:'Antes de fijarla, presenta la guirnalda sobre el coche. Juega con la forma y busca la posición ideal (en "V", asimétrica o curvada) para que luzca perfecta en el vehículo de los novios o invitados.',w:''},
+    {n:'3',t:'FIJAR CON FIRMEZA ✋',b:'Humedece muy ligeramente el interior de cada ventosa para crear un vacío más fuerte. Después, presiona firmemente el centro de la ventosa contra la chapa. ¡Asegúrate de presionar solo la ventosa y NUNCA las flores!',w:''},
+    {n:'4',t:'RETIRADA SEGURA 🔓',b:'Cuando termine la celebración, levanta suavemente la pequeña lengüeta transparente de cada ventosa para romper el vacío. Se soltará al instante sin dejar marcas.',w:'❗ ¡NUNCA tires de la flor o del tallo!'},
+    {n:'5',t:'¡A DISFRUTAR DEL DÍA! 🚗💨',b:'Todo listo para acompañaros en este momento tan especial. Conducid con precaución y disfrutad de cada instante. ¡De parte de Nueva Vida, os deseamos una celebración inolvidable!',w:'❗ VELOCIDAD MÁX. 80 KM/H',f:1}
   ],
   it:[
-    {n:'1',t:'PULIRE IL COFANO 🧼',b:'La superficie deve essere senza polvere e grasso.',w:'❗ NIENTE CERA! NIENTE LUCIDO!'},
-    {n:'2',t:'PREMERE LA VENTOSA ✋',b:'Inumidire leggermente le ventose. Premere direttamente la ventosa, MAI il fiore!',w:''},
-    {n:'3',t:'RIMOZIONE SICURA 🔓',b:'Per rimuovere, tirare SOLO la piccola linguetta.',w:'❗ MAI strappare il fiore!'},
-    {n:'4',t:'BUON VIAGGIO! 🚗💨',b:'',w:'❗ MAX. 80 KM/H',f:1}
+    {n:'1',t:'PULIRE IL COFANO 🧼',b:'Pulisci e asciuga bene la zona del cofano. La superficie deve essere completamente priva di polvere, sporco o grasso per garantire che le ventose aderiscano con la massima forza.',w:'❗ NIENTE CERA! NIENTE LUCIDO!'},
+    {n:'2',t:'POSIZIONARE 🎀',b:'Prima di fissarla, appoggia la ghirlanda sull\'auto. Gioca con la forma e trova la posizione ideale (a "V", asimmetrica o curva) affinché sia perfetta sul veicolo degli sposi o degli invitati.',w:''},
+    {n:'3',t:'FISSARE SALDAMENTE ✋',b:'Inumidisci leggermente l\'interno di ogni ventosa per creare un vuoto più forte. Quindi, premi saldamente il centro della ventosa contro la carrozzeria. Assicurati di premere SOLO la ventosa e MAI i fiori!',w:''},
+    {n:'4',t:'RIMOZIONE SICURA 🔓',b:'Dopo la celebrazione, solleva delicatamente la piccola linguetta trasparente di ogni ventosa per rompere il vuoto. Si staccherà all\'istante senza lasciare segni.',w:'❗ MAI tirare il fiore o il gambo!'},
+    {n:'5',t:'BUON VIAGGIO! 🚗💨',b:'Tutto è pronto per questo momento speciale. Guidate con prudenza e godetevi ogni istante. Da parte di Nueva Vida, vi auguriamo una celebrazione indimenticabile!',w:'❗ MAX. 80 KM/H',f:1}
   ]
 };
 const ST={de:'Support kontaktieren',en:'Contact Support',fr:'Contacter le Support',es:'Contactar Soporte',it:'Contatta il Supporto'};
@@ -141,11 +143,17 @@ function go(l){
 }
 function render(){
   const c=document.getElementById('slides'); c.innerHTML='';
+  const pb=document.getElementById('progBar'); pb.innerHTML='';
+  
   C[lang].forEach((s,i)=>{
+    const seg=document.createElement('div');
+    seg.className='seg'+(i===0?' current':'');
+    pb.appendChild(seg);
+
     const d=document.createElement('div');
     d.className='slide'+(i===0?' active':'');
     if(s.f){
-      d.innerHTML=`<div class="step-num">${s.n}</div><div class="divider"></div><div class="final-title">${s.t}</div>${s.w?`<div class="warn">${s.w}</div>`:''}<a href="mailto:info@nuevavida-ftv.de" class="support-btn">${ST[lang]}</a>`;
+      d.innerHTML=`<div class="step-num">${s.n}</div><div class="divider"></div><div class="final-title">${s.t}</div>${s.b?`<p style="margin-top:0.5rem; font-weight:600;">${s.b}</p>`:''}${s.w?`<div class="warn" style="margin-top:0.5rem;">${s.w}</div>`:''}<a href="mailto:info@nuevavida-ftv.de" class="support-btn">${ST[lang]}</a>`;
     } else {
       d.innerHTML=`<div class="step-num">${s.n}</div><div class="divider"></div><h2>${s.t}</h2>${s.b?`<p>${s.b}</p>`:''}${s.w?`<div class="warn">${s.w}</div>`:''}`;
     }
@@ -162,7 +170,7 @@ function show(i){
 }
 function next(){if(cur<C[lang].length-1){cur++;show(cur);cur<C[lang].length-1?resetAdv():clearTimeout(timer);}}
 function prev(){if(cur>0){cur--;show(cur);resetAdv();}}
-function adv(){if(cur<C[lang].length-1)timer=setTimeout(()=>{next();adv();},5000);}
+function adv(){if(cur<C[lang].length-1)timer=setTimeout(()=>{next();adv();},8000);}
 function resetAdv(){clearTimeout(timer);adv();}
 </script>
 </body>
