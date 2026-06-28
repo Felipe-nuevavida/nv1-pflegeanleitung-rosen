@@ -24,12 +24,10 @@
     .car-screen { display:none; flex-direction:column; width:100%; height:100%; background:#fff; position:relative; }
     .car-screen.active { display:flex; }
 
-    /* Estilo IG Stories para la barra de progreso */
     .prog-bar { width:100%; height:4px; display:flex; gap:6px; padding:12px 12px 0 12px; flex-shrink:0; z-index:20; }
     .seg { flex:1; height:100%; background:rgba(212,160,23,0.25); border-radius:4px; overflow:hidden; }
     .fill { height:100%; width:0%; background:#d4a017; border-radius:4px; }
     
-    /* Estados de la barra */
     .seg.done .fill { width:100%; }
     .seg.current .fill { animation: fillUp 8s linear forwards; }
     .is-paused .seg.current .fill { animation-play-state: paused; }
@@ -41,8 +39,9 @@
       padding:1rem 1.5rem; position:relative; overflow:hidden;
     }
 
-    .tap-l, .tap-r { position:absolute; top:0; width:25%; height:100%; cursor:pointer; z-index:10; }
-    .tap-l { left:0; } .tap-r { right:0; }
+    .tap-l, .tap-r { position:absolute; top:0; height:100%; cursor:pointer; z-index:10; }
+    .tap-l { left:0; width:25%; }
+    .tap-r { right:0; width:75%; }
 
     .slide { display:none; text-align:center; width:100%; flex-direction:column; align-items:center; gap:0.85rem; padding-top:0.5rem; animation:fadeSlide 0.3s ease; }
     .slide.active { display:flex; }
@@ -62,6 +61,7 @@
     .logo-small { position:absolute; top:15px; right:14px; width:56px; height:56px; object-fit:contain; opacity:0.75; z-index:5; pointer-events:none; }
 
     .final-title { font-size:2.4rem; font-weight:900; color:#1a1a1a; line-height:1.2; }
+    .final-msg { font-size:1.3rem; font-weight:600; color:#1a1a1a; line-height:1.6; max-width:420px; margin-top:0.5rem; }
     .support-btn {
       padding:1rem 2.5rem; font-size:1.2rem;
       background:linear-gradient(135deg,#c8a415,#f0c93a,#a07810);
@@ -69,7 +69,7 @@
       font-weight:800; letter-spacing:0.03em;
       box-shadow:0 2px 12px rgba(180,130,0,0.4);
       text-decoration:none; display:inline-block; transition:all 0.2s;
-      margin-top:0.3rem; position:relative; z-index:30;
+      margin-top:1rem; position:relative; z-index:30;
     }
     .support-btn:hover { transform:scale(1.04); }
     .support-btn:active { transform:scale(0.97); }
@@ -89,9 +89,7 @@
   </div>
 
   <div class="car-screen" id="carScreen">
-    <div class="prog-bar" id="progBar">
-      <!-- Generado dinámicamente por JS -->
-    </div>
+    <div class="prog-bar" id="progBar"></div>
     <div class="car-content">
       <div class="tap-l" onclick="prev()"></div>
       <img src="Logo_gold.png" class="logo-small" alt="" onerror="this.style.display='none'">
@@ -104,42 +102,42 @@
 <script>
 const C={
   de:[
-    {n:'1',t:'BASIS FÜR PERFEKTION 🧼',b:'Reinige und trockne die Motorhaube gründlich. Für bombenfesten Halt muss die Fläche absolut staub- und fettfrei sein.',w:'❗ WICHTIG: KEIN WACHS ODER POLITUR!'},
-    {n:'2',t:'EUER DESIGN 🎀',b:'Lege die Girlande auf das Auto, bevor du sie fixierst. Finde die perfekte Form (V-Form, asymmetrisch oder geschwungen) für unvergessliche Hochzeitsfotos.',w:''},
-    {n:'3',t:'SICHER FIXIEREN ✋',b:'Feuchte die Saugnäpfe minimal an. Drücke dann fest auf die Mitte jedes Saugnapfes, um das Vakuum zu aktivieren. So hält alles sicher und lackschonend.',w:'❗ NUR DEN SAUGNAPF DRÜCKEN, NIE DIE BLÜTEN!'},
-    {n:'4',t:'SPURENLOS LÖSEN 🔓',b:'Hebe nach der Feier einfach die kleine transparente Lasche am Saugnapf an. Das Vakuum löst sich sofort, ohne Rückstände auf dem Lack zu hinterlassen.',w:'❗ NIEMALS AN DER BLUME ODER AM STIEL ZIEHEN!'},
-    {n:'5',t:'GENIEßT DEN MOMENT! 🚗💨',b:'Alles ist bereit für euren großen Auftritt. Fahrt sicher und genießt jede Sekunde. Nueva Vida wünscht euch eine traumhafte Feier!',w:'❗ MAX. 80 KM/H - FÜR EURE SICHERHEIT',f:1}
+    {n:'1',t:'BASE PARA LA PERFECCIÓN 🧼',b:'Limpia y seca bien el capó con amor. Para que nuestras rosas descansen seguras, la superficie debe estar libre de polvo, suciedad y grasa. Este es el primer paso hacia la magia.',w:'❗ VITAL: ¡CERO CERA O PULIMENTO! Detiene el vacío.'},
+    {n:'2',t:'VUESTRO MASTERPIECE 🎀',b:'Coloca la guirnalda sobre el coche antes de fijarla. Juega, busca la forma ideal: en V, asimétrica, curva... Este es tu momento para crear. Cada ángulo cuenta en vuestra historia.',w:''},
+    {n:'3',t:'FIJACIÓN CON PRECISIÓN ✋',b:'Humedece apenas el interior de las ventosas. Presiona con confianza el centro de cada una: activarás el vacío que te sostiene. Firmeza, no brutalidad. El resultado: seguridad total que respeta tu coche.',w:'❗ SOLO LA VENTOSA. Las flores son delicadas como vuestra emoción.'},
+    {n:'4',t:'ADIÓS SIN RASTRO 🔓',b:'Cuando termine la magia, levanta suavemente la lengüeta transparente. El vacío cede al instante. Ni un rasguño, ni una marca. Vuestro coche brilla como al inicio, pero con un recuerdo imborrable.',w:'❗ NUNCA jales la flor ni el tallo. La perfección no deja heridas.'},
+    {n:'5',t:'¡VIVID CADA INSTANTE! 🚗💨',b:'Todo está listo. Vosotros brillas. Las rosas brillan. El coche brilla. Conducid seguros, sonreíd sin parar, y guardad este momento para siempre. Nueva Vida está en vuestro corazón.',w:'❗ MÁXIMO 80 KM/H – LA SEGURIDAD ES AMOR',f:1}
   ],
   en:[
-    {n:'1',t:'BASE FOR PERFECTION 🧼',b:'Thoroughly clean and dry the hood. For maximum grip, the surface must be completely free of dust, dirt, and grease.',w:'❗ IMPORTANT: NO WAX OR POLISH!'},
-    {n:'2',t:'YOUR DESIGN 🎀',b:'Place the garland on the car before securing it. Find the perfect shape (V-shape, asymmetrical, or curved) for unforgettable wedding photos.',w:''},
-    {n:'3',t:'SECURE FIRMLY ✋',b:'Slightly moisten the inside of the suction cups. Press firmly on the center of each cup to activate the vacuum. This ensures a safe, paint-friendly hold.',w:'❗ PRESS ONLY THE CUP, NEVER THE FLOWERS!'},
-    {n:'4',t:'TRACELESS REMOVAL 🔓',b:'After the celebration, simply lift the small transparent tab on the suction cup. The vacuum releases instantly without leaving any marks on the paint.',w:'❗ NEVER PULL ON THE FLOWER OR STEM!'},
-    {n:'5',t:'ENJOY THE MOMENT! 🚗💨',b:'Everything is ready for your grand entrance. Drive safely and enjoy every second. Nueva Vida wishes you a magical celebration!',w:'❗ MAX. 80 KM/H (50 MPH) - SAFETY FIRST',f:1}
+    {n:'1',t:'BASE FOR PERFECTION 🧼',b:'Thoroughly clean and dry the hood with care. For our roses to rest securely, the surface must be dust-, dirt-, and grease-free. This is your first step toward magic.',w:'❗ CRITICAL: NO WAX OR POLISH! It blocks the vacuum.'},
+    {n:'2',t:'YOUR MASTERPIECE 🎀',b:'Place the garland on the car before securing it. Play, explore the ideal shape: V-form, asymmetrical, curved... This is your moment to create. Every angle matters in your story.',w:''},
+    {n:'3',t:'SECURE WITH PRECISION ✋',b:'Slightly moisten the inside of the suction cups. Press confidently at the center of each one: you\'ll activate the vacuum that holds you steady. Firmness, not force. The result: total security that respects your car.',w:'❗ ONLY THE CUP. The flowers are as delicate as your emotions.'},
+    {n:'4',t:'GOODBYE WITHOUT A TRACE 🔓',b:'When the magic ends, gently lift the transparent tab. The vacuum releases instantly. Not a scratch, not a mark. Your car shines like new, but now carries an unforgettable memory.',w:'❗ NEVER pull the flower or stem. Perfection leaves no wounds.'},
+    {n:'5',t:'LIVE EVERY SECOND! 🚗💨',b:'Everything is ready. You shine. The roses shine. Your car shines. Drive safely, smile endlessly, and keep this moment forever. Nueva Vida is in your heart.',w:'❗ MAXIMUM 80 KM/H – SAFETY IS LOVE',f:1}
   ],
   fr:[
-    {n:'1',t:'BASE DE LA PERFECTION 🧼',b:'Nettoyez et séchez soigneusement le capot. Pour une adhérence maximale, la surface doit être totalement exempte de poussière et de graisse.',w:'❗ IMPORTANT : NI CIRE NI POLISH !'},
-    {n:'2',t:'VOTRE DESIGN 🎀',b:'Placez la guirnalde sur la voiture avant de la fixer. Trouvez la forme parfaite (en V, asymétrique ou courbée) pour des photos de mariage inoubliables.',w:''},
-    {n:'3',t:'FIXATION SÉCURISÉE ✋',b:'Humidifiez très légèrement l\'intérieur des ventouses. Appuyez fermement au centre de chacune pour activer le vide. Cela garantit un maintien sûr qui protège la peinture.',w:'❗ APPUYEZ UNIQUEMENT SUR LA VENTOUSE, JAMAIS SUR LES FLEURS !'},
-    {n:'4',t:'RETRAIT SANS TRACE 🔓',b:'Après la fête, soulevez simplement la petite languette transparente de la ventouse. Le vide se libère instantanément sans laisser de traces sur la carrosserie.',w:'❗ NE TIREZ JAMAIS SUR LA FLEUR OU LA TIGE !'},
-    {n:'5',t:'PROFITEZ DU MOMENT ! 🚗💨',b:'Tout est prêt pour votre grande entrée. Conduisez prudemment et savourez chaque seconde. Nueva Vida vous souhaite une célébration magique !',w:'❗ MAX. 80 KM/H - LA SÉCURITÉ AVANT TOUT',f:1}
+    {n:'1',t:'BASE DE LA PERFECTION 🧼',b:'Nettoyez et séchez le capot avec amour. Pour que nos roses reposent en sécurité, la surface doit être libre de poussière, saleté et graisse. Voilà votre premier pas vers la magie.',w:'❗ ESSENTIEL : NI CIRE NI POLISH ! Cela bloque le vide.'},
+    {n:'2',t:'VOTRE CHEF-D\'ŒUVRE 🎀',b:'Placez la guirlande sur la voiture avant de la fixer. Explorez, trouvez la forme idéale : en V, asymétrique, courbe... C\'est votre moment pour créer. Chaque angle compte dans votre histoire.',w:''},
+    {n:'3',t:'FIXATION AVEC PRÉCISION ✋',b:'Humidifiez légèrement l\'intérieur des ventouses. Appuyez avec confiance au centre de chacune : vous activerez le vide qui vous soutient. Fermeté, pas brutalité. Résultat : sécurité totale qui respecte votre auto.',w:'❗ UNIQUEMENT LA VENTOUSE. Les fleurs sont aussi délicates que vos émotions.'},
+    {n:'4',t:'AU REVOIR SANS TRACES 🔓',b:'Quand la magie s\'achève, levez doucement la languette transparente. Le vide s\'échappe à l\'instant. Pas une rayure, pas une marque. Votre auto brille comme neuve, portant maintenant un souvenir gravé.',w:'❗ NE TIREZ JAMAIS sur la fleur ou la tige. La perfection ne blesse pas.'},
+    {n:'5',t:'VIVEZ CHAQUE INSTANT ! 🚗💨',b:'Tout est prêt. Vous brillez. Les roses brillent. Votre voiture brille. Conduisez prudemment, souriez sans fin, et gardez ce moment à jamais. Nueva Vida est dans votre cœur.',w:'❗ MAXIMUM 80 KM/H – LA SÉCURITÉ EST L\'AMOUR',f:1}
   ],
   es:[
-    {n:'1',t:'BASE PARA LA PERFECCIÓN 🧼',b:'Limpia y seca bien el capó. Para un agarre insuperable, la superficie debe estar totalmente libre de polvo, suciedad y grasa.',w:'❗ IMPORTANTE: ¡CERO CERA O PULIMENTO!'},
-    {n:'2',t:'VUESTRO DISEÑO 🎀',b:'Presenta la guirnalda sobre el coche antes de fijarla. Encuentra la forma ideal (en "V", asimétrica o curva) para unas fotos de boda inolvidables.',w:''},
-    {n:'3',t:'FIJACIÓN SEGURA ✋',b:'Humedece mínimamente el interior de las ventosas. Presiona con firmeza el centro de cada una para activar el vacío. Así garantizas un agarre total que protege la pintura.',w:'❗ ¡PRESIONA SOLO LA VENTOSA, NUNCA LAS FLORES!'},
-    {n:'4',t:'RETIRADA SIN RASTRO 🔓',b:'Tras la celebración, levanta suavemente la pequeña lengüeta transparente de la ventosa. El vacío se rompe al instante, sin dejar marcas en la carrocería.',w:'❗ ¡NUNCA TIRES DE LA FLOR O DEL TALLO!'},
-    {n:'5',t:'¡DISFRUTAD DEL MOMENTO! 🚗💨',b:'Todo listo para vuestra gran entrada. Conducid con seguridad y vivid cada segundo. ¡Nueva Vida os desea una celebración mágica!',w:'❗ MÁX. 80 KM/H - LA SEGURIDAD ES LO PRIMERO',f:1}
+    {n:'1',t:'BASE PARA LA PERFECCIÓN 🧼',b:'Limpia y seca bien el capó con amor. Para que nuestras rosas descansen seguras, la superficie debe estar libre de polvo, suciedad y grasa. Este es el primer paso hacia la magia.',w:'❗ VITAL: ¡CERO CERA O PULIMENTO! Detiene el vacío.'},
+    {n:'2',t:'VUESTRO MASTERPIECE 🎀',b:'Coloca la guirnalda sobre el coche antes de fijarla. Juega, busca la forma ideal: en V, asimétrica, curva... Este es tu momento para crear. Cada ángulo cuenta en vuestra historia.',w:''},
+    {n:'3',t:'FIJACIÓN CON PRECISIÓN ✋',b:'Humedece apenas el interior de las ventosas. Presiona con confianza el centro de cada una: activarás el vacío que te sostiene. Firmeza, no brutalidad. El resultado: seguridad total que respeta tu coche.',w:'❗ SOLO LA VENTOSA. Las flores son delicadas como vuestra emoción.'},
+    {n:'4',t:'ADIÓS SIN RASTRO 🔓',b:'Cuando termine la magia, levanta suavemente la lengüeta transparente. El vacío cede al instante. Ni un rasguño, ni una marca. Vuestro coche brilla como al inicio, pero con un recuerdo imborrable.',w:'❗ NUNCA jales la flor ni el tallo. La perfección no deja heridas.'},
+    {n:'5',t:'¡VIVID CADA INSTANTE! 🚗💨',b:'Todo está listo. Vosotros brillas. Las rosas brillan. El coche brilla. Conducid seguros, sonreíd sin parar, y guardad este momento para siempre. Nueva Vida está en vuestro corazón.',w:'❗ MÁXIMO 80 KM/H – LA SEGURIDAD ES AMOR',f:1}
   ],
   it:[
-    {n:'1',t:'BASE PER LA PERFEZIONE 🧼',b:'Pulisci e asciuga accuratamente il cofano. Per una tenuta massima, la superficie deve essere completamente priva di polvere e grasso.',w:'❗ IMPORTANTE: NIENTE CERA O LUCIDO!'},
-    {n:'2',t:'IL VOSTRO DESIGN 🎀',b:'Posiziona la ghirlanda sull\'auto prima di fissarla. Trova la forma perfetta (a V, asimmetrica o curva) per foto di matrimonio indimenticabili.',w:''},
-    {n:'3',t:'FISSAGGIO SICURO ✋',b:'Inumidisci leggermente l\'interno delle ventose. Premi saldamente il centro di ciascuna per attivare il vuoto. Questo garantisce una presa sicura che protegge la vernice.',w:'❗ PREMI SOLO LA VENTOSA, MAI I FIORI!'},
-    {n:'4',t:'RIMOZIONE SENZA TRACCE 🔓',b:'Dopo i festeggiamenti, solleva semplicemente la piccola linguetta trasparente della ventosa. Il vuoto si rilascia all\'istante senza lasciare segni sulla carrozzeria.',w:'❗ NON TIRARE MAI IL FIORE O IL GAMBO!'},
-    {n:'5',t:'GODETEVI IL MOMENTO! 🚗💨',b:'Tutto è pronto per il vostro grande ingresso. Guidate con prudenza e godetevi ogni secondo. Nueva Vida vi augura una celebrazione magica!',w:'❗ MAX. 80 KM/H - LA SICUREZZA PRIMA DI TUTTO',f:1}
+    {n:'1',t:'BASE PER LA PERFEZIONE 🧼',b:'Pulisci e asciuga il cofano con amore. Perché le nostre rose riposino al sicuro, la superficie deve essere libera da polvere, sporco e grasso. Questo è il tuo primo passo verso la magia.',w:'❗ CRITICO: NIENTE CERA O LUCIDO! Blocca il vuoto.'},
+    {n:'2',t:'IL VOSTRO CAPOLAVORO 🎀',b:'Posiziona la ghirlanda sull\'auto prima di fissarla. Gioca, esplora la forma ideale: a V, asimmetrica, curva... Questo è il tuo momento per creare. Ogni angolo conta nella vostra storia.',w:''},
+    {n:'3',t:'FISSAGGIO CON PRECISIONE ✋',b:'Inumidisci leggermente l\'interno delle ventose. Premi con fiducia al centro di ciascuna: attiverai il vuoto che ti sostiene. Fermezza, non forza. Risultato: sicurezza totale che rispetta la tua auto.',w:'❗ SOLO LA VENTOSA. I fiori sono delicati come le vostre emozioni.'},
+    {n:'4',t:'ARRIVEDERCI SENZA TRACCE 🔓',b:'Quando la magia finisce, solleva delicatamente la linguetta trasparente. Il vuoto si rilascia all\'istante. Nessun graffio, nessun segno. La tua auto brilla come nuova, ma ora porta un ricordo indimenticabile.',w:'❗ NON TIRARE MAI il fiore o lo stelo. La perfezione non ferisce.'},
+    {n:'5',t:'VIVETE OGNI ISTANTE! 🚗💨',b:'Tutto è pronto. Voi brillate. Le rose brillano. La vostra auto brilla. Guidate con prudenza, sorridete eternamente, e custodite questo momento per sempre. Nueva Vida è nel vostro cuore.',w:'❗ MASSIMO 80 KM/H – LA SICUREZZA È AMORE',f:1}
   ]
 };
-const ST={de:'Support kontaktieren',en:'Contact Support',fr:'Contacter le Support',es:'Contactar Soporte',it:'Contatta il Supporto'};
+const ST={de:'Soporte contactar',en:'Contact Support',fr:'Contacter le Support',es:'Contactar Soporte',it:'Contatta il Supporto'};
 let lang='de',cur=0;
 
 function go(l){
@@ -154,27 +152,40 @@ function render(){
   const pb=document.getElementById('progBar'); pb.innerHTML='';
   
   C[lang].forEach((s,i)=>{
-    // Crear segmento de barra de progreso
     const seg=document.createElement('div');
     seg.className='seg';
     const fill=document.createElement('div');
     fill.className='fill';
     
-    // Cuando la animación de la barra termina, pasar a la siguiente
-    fill.addEventListener('animationend', () => {
-      if(i === cur && cur < C[lang].length - 1) next();
-    });
+    // Sincronización: animationend solo para no-final slides
+    if(i < C[lang].length - 1) {
+      fill.addEventListener('animationend', () => {
+        if(i === cur) next();
+      }, { once: false });
+    }
     
     seg.appendChild(fill);
     pb.appendChild(seg);
 
-    // Crear diapositiva
     const d=document.createElement('div');
     d.className='slide';
     if(s.f){
-      d.innerHTML=`<div class="step-num">${s.n}</div><div class="divider"></div><div class="final-title">${s.t}</div>${s.b?`<p style="margin-top:0.5rem; font-weight:600;">${s.b}</p>`:''}${s.w?`<div class="warn" style="margin-top:0.5rem;">${s.w}</div>`:''}<a href="mailto:info@nuevavida-ftv.de" class="support-btn">${ST[lang]}</a>`;
+      d.innerHTML=`
+        <div class="step-num">${s.n}</div>
+        <div class="divider"></div>
+        <div class="final-title">${s.t}</div>
+        ${s.b?`<div class="final-msg">${s.b}</div>`:''}
+        ${s.w?`<div class="warn" style="margin-top:1rem;">${s.w}</div>`:''}
+        <a href="mailto:info@nuevavida-ftv.de" class="support-btn">${ST[lang]}</a>
+      `;
     } else {
-      d.innerHTML=`<div class="step-num">${s.n}</div><div class="divider"></div><h2>${s.t}</h2>${s.b?`<p>${s.b}</p>`:''}${s.w?`<div class="warn">${s.w}</div>`:''}`;
+      d.innerHTML=`
+        <div class="step-num">${s.n}</div>
+        <div class="divider"></div>
+        <h2>${s.t}</h2>
+        ${s.b?`<p>${s.b}</p>`:''}
+        ${s.w?`<div class="warn">${s.w}</div>`:''}
+      `;
     }
     c.appendChild(d);
   });
@@ -186,8 +197,7 @@ function show(i){
     s.classList.remove('current','done');
     if(j<i) s.classList.add('done'); 
     else if(j===i) {
-      // Forzar reinicio de animación CSS
-      void s.offsetWidth;
+      void s.offsetWidth; // Fuerza reflow para reiniciar animación
       s.classList.add('current');
     }
   });
@@ -195,16 +205,46 @@ function show(i){
   if(slides[i]) slides[i].classList.add('active');
 }
 
-function next(){ if(cur<C[lang].length-1){ cur++; show(cur); } }
-function prev(){ if(cur>0){ cur--; show(cur); } }
+function next(){ 
+  if(cur < C[lang].length - 1){ 
+    cur++; 
+    show(cur); 
+  } 
+}
 
-// Lógica de Pausa al mantener pulsado (Touch y Mouse)
+function prev(){ 
+  if(cur > 0){ 
+    cur--; 
+    show(cur); 
+  } 
+}
+
+// Pausa táctil: mouse y touch
 const carScreen = document.getElementById('carScreen');
-carScreen.addEventListener('mousedown', () => carScreen.classList.add('is-paused'));
-carScreen.addEventListener('mouseup', () => carScreen.classList.remove('is-paused'));
-carScreen.addEventListener('mouseleave', () => carScreen.classList.remove('is-paused'));
-carScreen.addEventListener('touchstart', () => carScreen.classList.add('is-paused'));
-carScreen.addEventListener('touchend', () => carScreen.classList.remove('is-paused'));
+
+carScreen.addEventListener('mousedown', () => {
+  carScreen.classList.add('is-paused');
+});
+
+carScreen.addEventListener('mouseup', () => {
+  carScreen.classList.remove('is-paused');
+});
+
+carScreen.addEventListener('mouseleave', () => {
+  carScreen.classList.remove('is-paused');
+});
+
+carScreen.addEventListener('touchstart', (e) => {
+  carScreen.classList.add('is-paused');
+}, { passive: true });
+
+carScreen.addEventListener('touchend', () => {
+  carScreen.classList.remove('is-paused');
+}, { passive: true });
+
+carScreen.addEventListener('touchcancel', () => {
+  carScreen.classList.remove('is-paused');
+}, { passive: true });
 
 </script>
 </body>
